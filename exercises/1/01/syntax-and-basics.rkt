@@ -128,11 +128,11 @@
 (define (fib n) void)
 
 ; 7. Намира сумата на 2 естествени числа, използвайте succ и pred.
-(define (add n) void)
+(define (add n m) void)
 
 ; 8. Намира произведението на 2 естествени числа.
 ; Използвайте sum и pred.
-(define (multiply n) void)
+(define (multiply n m) void)
 
 ; 9. Намира броя на цифрите на дадено естествено число n.
 (define (count-digits n) void)
