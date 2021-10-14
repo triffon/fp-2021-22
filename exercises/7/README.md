@@ -8,5 +8,5 @@
 
 ## Седмица 2 - Още въведение + итеративни процеси
 * [Записки](./class/02.recursive-and-iterative-processes.md)
-* [Задачки за вкъщи](./exercises/02.recursive-and-iterative-processes)
+* [Задачки за вкъщи](./exercises/02.recursive-iterative-processes)
 
