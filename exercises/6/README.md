@@ -2,13 +2,19 @@
 
 Водени от Деян Горанов.
 
+Всеки петък от 8:00 до 10:00 в зала 120.
+
 [Racket cheat sheet](https://docs.racket-lang.org/racket-cheat/index.html)
 
 
+## Scheme
+
 | №   | Упражнение                                      |
 | --- | ----------------------------------------------- |
-|  1  | [Scheme - основи, рекурсия][1e]              |
+|  1  | [Основи, рекурсия][1e]                          |
+|  2  | [Рекурсия и итерация][2e]                       |
 
 [1e]: 01-basics/problems.01.rkt
+[2e]: 02-rec-iter
 
-[Learn You a Haskell for Great Good!](http://learnyouahaskell.com/chapters)
+[Learn You a Haskell for Great Good!](https://learnyouahaskell.com/chapters)
