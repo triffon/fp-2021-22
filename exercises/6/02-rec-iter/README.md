@@ -13,8 +13,7 @@
 ### [Зад 3 `bin-to-dec`][bin-to-dec]
 Преобразуване от двоична в десетична бройна система.
 
-> Забележка: тук под бройна система разбираме просто използваните цифри в представянето на числото. Тоест няма създаваме двоични числа, започващи с [#b](http://people.csail.mit.edu/jaffer/r5rs/Syntax-of-numerical-constants.html). Фактически работим само с десетични числа в Scheme.
-Примери:
+> Забележка: тук под бройна система разбираме просто използваните цифри в представянето на числото. Тоест няма създаваме двоични числа, започващи с [#b]. Фактически работим само с десетични числа в Scheme.
 
 ### [Зад 4 `dec-to-bin`][dec-to-bin]
 Преобразува число от десетична в двоична бройна система.
@@ -56,6 +55,7 @@
 ```
 
 [download]: https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Ftriffon%2Ffp-2021-22%2Ftree%2Fmaster%2Fexercises%2F6%2F02-rec-iter
+[#b]: http://people.csail.mit.edu/jaffer/r5rs/Syntax-of-numerical-constants.html
 [primality-test]: https://en.wikipedia.org/wiki/Primality_test
 [prev-exercise]: ../01-basics/problems.01.rkt
 
