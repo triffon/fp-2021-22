@@ -1,47 +1,31 @@
 # Рекурсия и итерация (упр 2)
 
+#### [Сваляне на задачите][download]
+
 > Често е по-лесно да решите задача рекурсивно първия път.
 
-### [зад 1 `count-digits`][count-digits]
+### [Зад 1 `count-digits`][count-digits]
 Брой цифри на цяло число (вкл. и отрицателно).
 
-### [зад 2 `sum-digits`][sum-digits]
+### [Зад 2 `sum-digits`][sum-digits]
 Сума от цифрите на цяло число.
 
-### [зад 3 `bin-to-dec`][bin-to-dec]
+### [Зад 3 `bin-to-dec`][bin-to-dec]
 Преобразуване от двоична в десетична бройна система.
 
 > Забележка: тук под бройна система разбираме просто използваните цифри в представянето на числото. Тоест няма създаваме двоични числа, започващи с [#b](http://people.csail.mit.edu/jaffer/r5rs/Syntax-of-numerical-constants.html). Фактически работим само с десетични числа в Scheme.
 Примери:
-```scheme
-(bin-to-dec 100) -> 4
-(bin-to-dec 1111) -> 15
-```
 
-### [зад 4 `dec-to-bin`][dec-to-bin]
+### [Зад 4 `dec-to-bin`][dec-to-bin]
 Преобразува число от десетична в двоична бройна система.
-```scheme
-(dec-to-bin 4) -> 100
-(dec-to-bin 31) -> 11111
-```
 
-### [зад 5 `reverse-digits`][reverse-digits]
+### [Зад 5 `reverse-digits`][reverse-digits]
 Обръща реда на цифрите на число.
-```scheme
-(reverse-num 12305) -> 50321
-(reverse-num 10000) -> 1
-(reverse-num -1093) -> -3901
-```
 
-### [зад 6 `palindrome?`][palindrome?]
+### [Зад 6 `palindrome?`][palindrome?]
 Дали числото е палиндром?
-```scheme
-(palindrome? 1234) -> #f
-(palindrome? 9102019) -> #t
-(palindrome? 10000001) -> #t
-```
 
-### [зад 7 `sum-divisors`][sum-divisors]
+### [Зад 7 `sum-divisors`][sum-divisors]
 Сбор от делителите на число.
 
 ### зад 8 итерация
@@ -52,15 +36,15 @@
 [`dec-to-bin`][dec-to-bin] и
 [`reverse-digits`][reverse-digits].
 
-### [зад 9 `prime?`][prime?]
+### [Зад 9 `prime?`][prime?]
 Дали числото е просто?
 
 > Дадено цяло число n е просто, ако не се дели на никое от числата между 2 и n-1 (даже [от 2 до √n][primality-test]).
 
-### [зад 10 `fasterpow`][fasterpow]
+### [Зад 10 `fasterpow`][fasterpow]
 Итеративен вариант на `fastpow` от [миналото упражнение][prev-exercise].
 
-### [зад 11 `automorphic?`][automorphic?] **за 2т. бонус**
+### [Зад 11 `automorphic?`][automorphic?] **за 2т. бонус**
 Дали е автоморфно числото? Едно число е _автоморфно_, ако квадратът му завършва на него.
 
 ```scheme
@@ -71,6 +55,7 @@
 (automorphic? 11) -> #f
 ```
 
+[download]: https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Ftriffon%2Ffp-2021-22%2Ftree%2Fmaster%2Fexercises%2F6%2F02-rec-iter
 [primality-test]: https://en.wikipedia.org/wiki/Primality_test
 [prev-exercise]: ../01-basics/problems.01.rkt
 
