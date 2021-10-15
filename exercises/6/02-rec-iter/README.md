@@ -28,7 +28,7 @@
 ### [Зад 7 `sum-divisors`][sum-divisors]
 Сбор от делителите на число.
 
-### зад 8 итерация
+### Зад 8 итерация
 Интеративен вариант в същия файл на
 [`count-digits`][count-digits],
 [`sum-digits`][sum-digits],
