@@ -36,6 +36,8 @@
 Броят на наредените двойки цели числа (`x`,`y`) от интервала [a,b], които имат най-голям общ делител равен на `n`.
 
 [newton-wiki]: https://en.wikipedia.org/wiki/Binomial_theorem
+[download]: https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Ftriffon%2Ffp-2021-22%2Ftree%2Fmaster%2Fexercises%2F6%2F03-higher-order--accumulate
+
 [common]: ./common.03.rkt
 [fib-fact]: ./01.fib-fact.rkt
 [newton-binomial]: ./02.newton-binomial.rkt
