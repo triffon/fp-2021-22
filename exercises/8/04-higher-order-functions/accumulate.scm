@@ -1,6 +1,28 @@
 (require rackunit rackunit/text-ui)
 
+(define (accumulate combiner null-value term a next b)
+  (if (> a b)
+      null-value
+      (combiner (term a)
+                (accumulate combiner null-value term (next a) next b))))
 
+(define (accumulate-iter combiner null-value term a next b)
+  (define (iter acc a)
+    (if (> a b)
+        acc
+        (iter (combiner (term a) acc) (next a))))
+
+  (iter null-value a))
+
+(define (sum term a next b)
+  (accumulate-iter + 0 term a next b))
+
+(define (product term a next b)
+  (accumulate-iter * 1 term a next b))
+
+(define (identity x) x)
+(define (inc x) (+ x 1))
+(define (square x) (* x x))
 
 (define accumulate-tests
   (test-suite
