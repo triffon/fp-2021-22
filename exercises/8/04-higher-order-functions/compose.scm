@@ -1,6 +1,11 @@
 (require rackunit rackunit/text-ui)
 
+(define (compose f g)
+  (lambda (x) (f (g x))))
 
+(define (identity x) x)
+(define (inc x) (+ x 1))
+(define (square x) (* x x))
 
 (define compose-tests
   (test-suite
