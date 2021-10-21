@@ -13,8 +13,10 @@
 | --- | ----------------------------------------------- |
 |  1  | [Основи, рекурсия][1e]                          |
 |  2  | [Рекурсия и итерация][2e]                       |
+|  2  | [Функции от по-висок ред и accumulate][3e]      |
 
 [1e]: 01-basics/problems.01.rkt
 [2e]: 02-rec-iter
+[3e]: 03-higher-order--accumulate
 
 [Learn You a Haskell for Great Good!](https://learnyouahaskell.com/chapters)
