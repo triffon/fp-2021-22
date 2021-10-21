@@ -10,3 +10,7 @@
 * [Записки](./class/02.recursive-and-iterative-processes.md)
 * [Задачки за вкъщи](./exercises/02.recursive-iterative-processes)
 
+## Седмица 3 - Функции от по-висок ред
+* [Код от час](./class/03.higher-order-functions.rkt)
+* [Записки](./class/03.higher-order-functions.md)
+* [Задачки за вкъщи](./exercises/03.higher-order-functions)
