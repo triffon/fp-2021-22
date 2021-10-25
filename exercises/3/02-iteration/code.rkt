@@ -5,7 +5,7 @@
   (+ x 1))
 
 (define (pred n)
-  (pred-h n 0))
+  (- n 1))
 
 
 ; zad 1
@@ -53,3 +53,26 @@
   (if (= n 0)
       1
       (iter n 0)))
+
+; zad 7
+(define (count-divisors n)
+  (define (count-divisors-from m)
+    (if (= m 0)
+        0
+        (if (divides m n)
+            (succ (count-divisors-from (pred m)))
+                  (count-divisors-from (pred m)))))
+  (count-divisors-from n))
+        
+
+(define (count-divisors-iter n)
+  (define (count-divisors-from m res)
+    (if (> m n)
+        res
+        (if (divides m n)
+            (count-divisors-from (succ m) (succ res))
+            (count-divisors-from (succ m) res))))
+  (count-divisors-from 1 0))
+
+(define (divides m n)
+  (= (remainder n m) 0))
