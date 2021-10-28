@@ -14,3 +14,8 @@
 * [Код от час](./class/03.higher-order-functions.rkt)
 * [Записки](./class/03.higher-order-functions.md)
 * [Задачки за вкъщи](./exercises/03.higher-order-functions)
+
+## Седмица 4 - Списъци
+* [Код от час](./class/04.lists.rkt)
+* [Записки](./class/04.lists.rkt)
+* [Задачки за вкъщи](./exercises/04.lists)
