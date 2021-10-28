@@ -4,8 +4,16 @@
 
 ;### зад 10
 ; Итеративен вариант на `fastpow` от миналото упражнение.
+(define (square x)
+  (* x x))
+
 (define (fasterpow x n)
-  'тук)
+  (define (iter y i result)
+    (cond
+      ((= i 0)   result)
+      ((even? i) (iter (square y) (quotient i 2) result))
+      (else      (iter y (- i 1) (* y result)))))
+  (iter x n 1))
 
 (run-tests
   (test-suite

@@ -2,7 +2,7 @@
 (require rackunit)
 (require rackunit/text-ui)
 
-;### зад 11 **за 2т. бонус**
+;### зад 11 **за домашно (2т.)**
 ; Дали е автоморфно числото? Едно число е _автоморфно_, ако квадратът му завършва на него.
 (define (automorphic? x n)
   'тук)
@@ -25,6 +25,5 @@
     (check-true (automorphic? 76))
     (check-true (automorphic? 376))
     (check-true (automorphic? 625))
-    (check-true (automorphic? 9376))
+    (check-true (automorphic? 9376)))
   'verbose)
-

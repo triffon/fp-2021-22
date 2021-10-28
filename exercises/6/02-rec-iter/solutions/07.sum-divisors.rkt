@@ -5,7 +5,14 @@
 ;### зад 7
 ; Сбор от делителите на число.
 (define (sum-divisors n)
-  'тук)
+  (define (go i)
+    (if (= i 1)
+        1
+        (+ (if (= 0 (remainder n i))
+               i
+               0)
+           (go (- i 1)))))
+  (go n))
 
 (run-tests
   (test-suite

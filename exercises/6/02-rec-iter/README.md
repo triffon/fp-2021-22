@@ -1,6 +1,7 @@
 # Рекурсия и итерация (упр 2)
 
 #### [Сваляне на задачите][download]
+#### [Решения][solutions]
 
 > Често е по-лесно да решите задача рекурсивно първия път.
 
@@ -43,7 +44,7 @@
 ### [Зад 10 `fasterpow`][fasterpow]
 Итеративен вариант на `fastpow` от [миналото упражнение][prev-exercise].
 
-### [Зад 11 `automorphic?`][automorphic?] **за 2т. бонус**
+### [Зад 11 `automorphic?`][automorphic?] **за домашно (2т.)**
 Дали е автоморфно числото? Едно число е _автоморфно_, ако квадратът му завършва на него.
 
 ```scheme
@@ -55,6 +56,7 @@
 ```
 
 [download]: https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Ftriffon%2Ffp-2021-22%2Ftree%2Fmaster%2Fexercises%2F6%2F02-rec-iter
+[solutions]: ./solutions
 [#b]: http://people.csail.mit.edu/jaffer/r5rs/Syntax-of-numerical-constants.html
 [primality-test]: https://en.wikipedia.org/wiki/Primality_test
 [prev-exercise]: ../01-basics/problems.01.rkt

@@ -5,7 +5,10 @@
 ;### зад 4
 ; Преобразува число от десетична в двоична бройна система.
 (define (dec-to-bin n)
-  'тук)
+  (if (< n 2)
+      n
+      (+ (remainder n 2)
+         (* 10 (dec-to-bin (quotient n 2))))))
 
 (run-tests
   (test-suite

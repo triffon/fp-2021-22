@@ -9,7 +9,10 @@
 ; Фактически работим само с десетични числа в Scheme.
 
 (define (bin-to-dec n)
-  'тук)
+  (if (< n 10)
+      n
+      (+ (remainder n 10)
+         (* 2 (bin-to-dec (quotient n 10))))))
 
 (run-tests
   (test-suite

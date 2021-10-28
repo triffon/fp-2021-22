@@ -5,7 +5,9 @@
 ;### зад 2
 ; Сума от цифрите на цяло число.
 (define (sum-digits n)
-  'тук)
+  (if (< n 10)
+      n
+      (+ (remainder n 10) (sum-digits (quotient n 10)))))
 
 (run-tests
   (test-suite
