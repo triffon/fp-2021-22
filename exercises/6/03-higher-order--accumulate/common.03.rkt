@@ -1,12 +1,18 @@
 #lang racket
+; Разни функции, показани на лекции. Ползваме ги наготово.
 
+
+; Следния ред означава че текущия файл provide-ва (предоставя) описаните идентификатори.
+; Тълкуваме го като export на съответните функции, за да може да се използват в други файлове,
+; където е import-нат текущия.
+; Примери са задачите от това упражение, повече от които точно import-ват този (common.03.rkt).
 (provide id 1+ sum prod accumulate accumulate-i twice compose repeated)
 
 (define (fixed-point? f x)
   (= (f x) x))
 
 (define (branch p? f g x)
-  ((if (p? x) f g) g))
+  ((if (p? x) f g) x))
 
 (define (id x)
   x)
