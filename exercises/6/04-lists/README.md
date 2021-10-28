@@ -1,5 +1,7 @@
 # Списъци (упр 4)
 
+#### [Сваляне на задачите](https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Ftriffon%2Ffp-2021-22%2Ftree%2Fmaster%2Fexercises%2F6%2F04-lists)
+
 ### [Зад 1 `length`](01.length.rkt)
 Дължина на списък
 
