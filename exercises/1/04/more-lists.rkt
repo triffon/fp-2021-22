@@ -82,7 +82,7 @@
 ; (define id (lambda (x) x))
 
 ; Тоест можем да правим и така
-(define (sum x . l) (foldl + 0 (cons x l)))
+(define (sum . l) (foldl + 0 l))
 
 
 ;;;;;;;;;;
