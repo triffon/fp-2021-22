@@ -1,6 +1,11 @@
 (require rackunit rackunit/text-ui)
 
-
+(define (my-filter l p)
+  (if (null? l)
+      '()
+      (if (p (car l))
+          (cons (car l) (my-filter (cdr l) p))
+          (my-filter (cdr l) p))))
 
 (define filter-tests
   (test-suite
