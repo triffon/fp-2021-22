@@ -44,7 +44,7 @@
 
 ; absolute value
 (define (my-abs a)
-  (if (a >= 0)
+  (if (>= a 0)
       a
       (- a)))
 
