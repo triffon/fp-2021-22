@@ -3,214 +3,190 @@
 ; допълнително, контролно, домашно
 
 ; head, tail
+(define l1 '(1 2 3 4 5))
+(define l2 (cons 1 (cons 2 (cons 3 '()))))
+;          (op   1 (op   2 (op   3 nv )))
+
+(define l3 (list 1 2 3 4 "neshto" (list 1 2 3) 'dsd + '(6 7 8) (list l1)))
+(define l4 (list 1 2 3 4 "neshto" 5 6))
+;(car l1)
+;(cdr l1)
 ; eq?, eqv?, equal?
-(define (null? L)
-  (eq? L '()))
+
+
+;; null?
+(define (null? l)
+  (eq? l '()))
 
 ; list?
-(define (list?-1 x)
-  (if (null? x)
-      #t
-      (if (pair? x)
-          (list? (cdr x))
-          #f)))
-
 (define (list? x)
   (or (null? x)
-      (and (pair? x)
-           (list? (cdr x)))))
+      (and (pair? x) (list? (cdr x)))))
 
+(define (infinite n)
+  (cons n (infinite (+ n 1))))
 
 ; length
-(define (length L)
-  (if (null? L)
+(define (length l)
+  (if (null? l)
       0
-      (+ 1 (length (cdr L)))))
+      (+ 1 (length (cdr l)))))
+
+
+(define (1+ n) (+ 1 n))
+(define (square x) (* x x))
 ; map
-(define (map f L)
-  (if (null? L)
-      L
-      (cons (f (car L)) (map f (cdr L)))))
-
-
-(define (map* f L)
+(define (map f l)
+  (if (null? l)
+      '()
+      (cons (f (car l))
+            (map f (cdr l)))))
+; map чрез foldr
+(define (map* f l)
   (foldr (lambda (x rec)
            (cons (f x) rec))
          '()
-         L))
+         l))
 
 ; filter
-(define (filter p? L)
-  (if (null? L)
-      L
-      (if (p? (car L))
-          (cons (car L) (filter p? (cdr L)))
-          (filter p? (cdr L)))))
-
-(define (filter* p? L)
+(define (filter p? l)
+  (if (null? l)
+      '()
+      (if (p? (car l))
+          (cons (car l) (filter p? (cdr l)))
+          (filter p? (cdr l)))))
+; filter чрез foldr
+(define (filter* p? l)
   (foldr (lambda (x rec)
            (if (p? x)
                (cons x rec)
                rec))
-         '() L))
-; append
-(define (append L M)
-  (if (null? L)
-      M
-      (cons (car L) (append (cdr L) M))))
-
-(define (append* L M)
-  (foldr cons
          '()
-         L))
+         l))
+
+; append
+(define (append l m)
+  (if (null? l)
+      m
+      (cons (car l) (append (cdr l) m))))
+; append чрез foldr
+(define (append* l m)
+  (foldr cons m l))
 
 ; foldr
-(define (foldr op nv L)
-  (if (null? L)
+(define (foldr op nv l)
+  (if (null? l)
       nv
-      (op (car L) (foldr op nv (cdr L)))))
+      (op (car l) (foldr op nv (cdr l)))))
+
+;(foldr cons '() l)
 
 ; чрез foldr
 ; length
-(define (sum L)
-  (foldr + 0 L))
-(define (1+ n) (+ 1 n))
 
-(define (length* L)
-  (foldr (lambda (x rec)
-           (+ 1 rec))
-         0
-         L))
-; map
+; foldl
+(define (foldl op v l)
+  (if (null? l)
+      v
+      (foldl op (op v (car l)) (cdr l))))
+
+(define (foldl-racket op v l)
+  (if (null? l)
+      v
+      (foldl op (op (car l) v) (cdr l))))
+
+
+
+(define (reverse2 l)
+  (if (null? l)
+      '()
+      (append (reverse2 (cdr l)) (list (car l)))))
+
+; foldl в racket
 
 (define (flip f)
   (lambda (x y)
     (f y x)))
-; filter
-; append
+(define (flip2 f)
+  (lambda (x y)
+    (f y x)))
 
-; foldl
-(define (foldl op v L)
-  (if (null? L)
-      v
-      (foldl op (op v (car L)) (cdr L))))
-
-
-(define (foldl** op v L)
-  (if (null? L)
-      v
-      (foldl op (op (car L) v) (cdr L))))
-
-
-
-
-
-(define (foldl* op nv L)
-  (define (help curr-L result)
-    (if (null? curr-L)
-        result
-        (help (cdr curr-L) (op result (car curr-L)))))
-  (help L nv))
 
 (define (rcons x y)
   (cons y x))
 
 (define rcons* (flip cons))
+;(define push-back snoc)
 
 (define (snoc x y)
   (append y (list x)))
 
-(define push-back snoc)
+(define (reverse l)
+  (foldr snoc '() l))
 
-(define (reverse L)
-  (foldr snoc '() L))
-
-
-(define (reverse* L)
+(define (reverse* l)
   (foldl (lambda (acc x)
            (cons x acc))
          '()
-         L))
+         l))
 
-; foldl в Racket
-
-; minus-from
-
-(define (minus-from n L)
-  (- n (foldr + 0 L)))
+(define (reverse** l)
+  (foldl rcons
+         '()
+         l))
 
 
-(define (minus-from* n L)
-  (foldr (flip -) n L))
-
-
-
-; reverse 3
-
-; any?
-(define (any? p? L)
-  (if (null? L)
+; any
+(define (any pred? l)
+  (if (null? l)
       #f
-      (or (p? (car L))
-          (any? p? (cdr L)))))
+      (or (pred? (car l))
+          (any pred? (cdr l)))))
+(define (any* pred? l)
+  (foldr (lambda (x rec) (or x rec)) #f l))
+; all
+(define (all pred? l)
+  (foldr (lambda (x rec) (and x rec)) #t l))
 
-(define (any?* p? L)
-  (foldl (lambda (x rec)
-           (or rec x))
-         #f
-         L))
-; all?
-(define (all? p? L)
-  (foldr (lambda (x rec)
-           (and rec x))
-         #t
-         L))
 ; member?
-(define (member? x L)
-  (any? (lambda (y)
-          (equal? y x))
-        L))
+(define (member? x l)
+  (if (null? l)
+      #f
+      (if (equal? x (car l))
+          #t ; l
+          (member? x (cdr l)))))
 
+(define (member?* x l)
+  (and (not (null? l))
+       (or (equal? x (car l))
+           (member?* x (cdr l)))))
+
+(define (from-to a b)
+  (if (> a b)
+      '()
+      (cons a (from-to (+ a 1) b))))
+(define (explode-digits n)
+  (if (< n 10)
+      (list n) ; (cons n '())
+      (append (explode-digits (quotient n 10)) (list (remainder n 10)))))
+
+(define (sum l)
+  (foldr + 0 l))
+
+(define (sum-even-digits n)
+  (sum (filter even? (explode-digits n))))
 ; remove
-(define (remove-all x L)
-  (filter (lambda (y) (not (equal? x y))) L))
-
 ; count-occurences
-(define (count-occurences x L)
-  (length (filter (lambda (y) (equal? x y)) L)))
 
 ;;;;;;;;;;;;;
 
 ; take
-(define (take n L)
-  (define (help counter curr-L result)
-    (if (> counter n)
-        result
-        (help (+ 1 counter)
-              (cdr curr-L)
-              (snoc (car curr-L) result))))
-  (help 1 L '()))
-
-(define (take* n L)
-  (if (or (null? L) (= n 0))
-      '()
-      (cons (car L) (take (- n 1) (cdr L)))))
-
-(define (take** n L)
-  (foldl (lambda (acc x)
-           (if (< (length acc) n)
-               (snoc x acc)
-               acc))
-         '()
-         L))
-          
 ; drop
-
 
 ; foldr1
 ; foldl1
 ; maximum
- 
+
 ; selection-sort
 ; slice
 ; zip
@@ -227,8 +203,8 @@
 ; count-atoms
 ; flatten
 ; deep-reverse
-; 
+;
 ; deep-foldr
 ; deep-foldl
-; 
+;
 ; var-func
