@@ -2,10 +2,9 @@
 (require rackunit rackunit/text-ui)
 
 ;### Зад 4
-; Дали полето изпълнява правилата на судоку?
-; Правилата са на всеки ред, колона и всички 3x3 подполета
-; да съдържат точно всички цифри от 1 до 9 без повторения.
-(define (sudoku-solved? board)
+; Дали полето `board` изпълнява правилата на судоку - всеки ред, колона и
+; всяко 3x3 подполе да съдържа точно всички елементи от `alphabet`.
+(define (sudoku-solved? alphabet board)
   'тук)
 
 
@@ -79,12 +78,66 @@
     (1 6 8  2 7 4  9 5 3)
     (4 9 2  8 5 3  1 6 7)))
 
+(define board1-roman
+  '((V III IV  VI VII VIII  IX I II)
+    (VI VII II  I IX V  III IV VIII)
+    (I IX VIII  III IV II  V VI VII)
+
+    (VIII V IX  VII VI I  IV II III)
+    (IV II VI  VIII V III  VII IX I)
+    (VII I III  IX II IV  VIII V VI)
+
+    (IX VI I  V III VII  II VIII IV)
+    (II VIII VII  IV I IX  VI III V)
+    (III IV V  II VIII VI  I VII IX)))
+
+(define board3-letters
+  '((w p e  k a r  i b d)
+    (d i a  b w p  k e r)
+    (r b k  e i d  p a w)
+
+    (p e r  i k w  a d b)
+    (i w b  d p a  r k e)
+    (k a d  r b e  w p i)
+
+    (b k w  a e i  d r p)
+    (a d p  w r b  e i k)
+    (e r i  p d k  b w a)))
+(define board3-dup
+  '((w p e  k a r  i b d)
+    (d i a  b w p  k e r)
+    (r b k  e i d  p a w)
+
+    (p e r  i w w  a d b)
+    (i w b  d p a  r k e)
+    (k a d  r b e  w p i)
+
+    (b k w  a e i  d r p)
+    (a d p  w r b  e i k)
+    (e r i  p d k  b w a)))
+
+(define digits '(1 2 3 4 5 6 7 8 9))
+(define digits-perm '(7 5 3 9 8 1 2 6 4))
+(define roman-numbers '(I II III IV V VI VII VIII IX))
+(define letters '(a b d e i k p r w))
+
 (run-tests
   (test-suite "sudoku-solved? tests"
-    (check-true (sudoku-solved? board1))
-    (check-true (sudoku-solved? board2))
-    (check-false (sudoku-solved? board1-grid))
-    (check-false (sudoku-solved? board1-row))
-    (check-false (sudoku-solved? board1-col))
-    (check-false (sudoku-solved? board2-false)))
+    (check-true (sudoku-solved? digits board1))
+    (check-true (sudoku-solved? digits board2))
+    (check-false (sudoku-solved? digits board1-grid))
+    (check-false (sudoku-solved? digits board1-row))
+    (check-false (sudoku-solved? digits board1-col))
+    (check-false (sudoku-solved? digits board2-false))
+
+    (check-true (sudoku-solved? digits-perm board1))
+    (check-true (sudoku-solved? digits-perm board2))
+    (check-false (sudoku-solved? digits-perm board1-grid))
+    (check-false (sudoku-solved? digits-perm board1-row))
+    (check-false (sudoku-solved? digits-perm board1-col))
+    (check-false (sudoku-solved? digits-perm board2-false))
+
+    (check-true (sudoku-solved? roman-numbers board1-roman))
+    (check-true (sudoku-solved? letters board3-letters))
+    (check-false (sudoku-solved? letters board3-dup)))
   'verbose)
