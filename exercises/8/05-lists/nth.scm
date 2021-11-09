@@ -1,6 +1,12 @@
 (require rackunit rackunit/text-ui)
 
+(define (nth l n)
+  (define (loop position l)
+    (if (= position n)
+        (car l)
+        (loop (+ 1 position) (cdr l))))
 
+  (loop 0 l))
 
 (define nth-tests
   (test-suite

@@ -1,6 +1,10 @@
 (require rackunit rackunit/text-ui)
 
-
+(define (scale l n)
+  (if (null? l)
+      '()
+      (cons (* n (car l))
+            (scale (cdr l) n))))
 
 (define scale-tests
   (test-suite

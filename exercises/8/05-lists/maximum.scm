@@ -1,5 +1,8 @@
 (require rackunit rackunit/text-ui)
 
+(define (maximum l)
+  (foldl max (car l) (cdr l)))
+
 (define maximum-tests
   (test-suite
     "Tests for maximum"
