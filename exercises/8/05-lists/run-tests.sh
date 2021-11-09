@@ -10,7 +10,7 @@ FAILED=0
 
 while read test; do
     echo -e "${BOLD}Running tests in ${test}${NO_FORMAT}"
-    racket -r $test &&
+    racket -f $test &&
         let PASSED=PASSED+1 ||
         let FAILED=FAILED+1
     echo

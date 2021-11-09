@@ -1,5 +1,15 @@
 (require rackunit rackunit/text-ui)
 
+(define (flatten l)
+  (cond ((null? l)
+          l)
+        ((pair? (car l))
+          (append (car l)
+                  (flatten (cdr l))))
+        (else ; otherwise (car l) is an atom
+          (cons (car l)
+                (flatten (cdr l))))))
+
 (define flatten-tests
   (test-suite
     "Tests for flatten"
