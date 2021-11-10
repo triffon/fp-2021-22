@@ -149,7 +149,6 @@
 
 ; По даден ключ изтрива първата съответстваща двойка със същия ключ
 (define (del-assoc key alist)
-  (filter (lambda (alist-pair)
-            (not (equal? (car alist-pair) key)))
-          alist))
-
+  (if (equal? key (caar alist))
+    (cdr alist)
+    (cons (car alist) (del-assoc key (cdr alist)))))
