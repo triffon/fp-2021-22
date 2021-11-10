@@ -102,11 +102,11 @@
          (iter (cdr l) (cons (car l) res))))
   (iter l '()))
 
-(define (snoc t h) (cons h t))
+(define (rcons t h) (cons h t))
 
 (define (reverse l)
   ; (foldl (lambda (r h) (cons h r)) '() l))
-  (foldl snoc '() l))
+  (foldl rcons '() l))
 
 (define (maximum l)
   (foldr max (car l) l))
@@ -123,19 +123,51 @@
 (define (atom? x)
   (not (or (pair? x) (null? x))))
 
-(define (count-atoms dl)
-  (cond ((null? dl) 0)
-        ((atom? dl) 1)
-        (else (+ (count-atoms (car dl)) (count-atoms (cdr dl))))))
+(define (flatten dl)
+  (cond ((null? dl) '())
+        ((atom? dl) (list dl))
+        (else (append (flatten (car dl)) (flatten (cdr dl))))))
+
+(define (snoc x l) (append l (list x)))
+
+(define (deep-reverse dl)
+  (cond ((null? dl) '())
+        ((atom? dl) dl)
+        ; (else (append (deep-reverse (cdr dl)) (list (deep-reverse (car dl)))))))
+        (else (snoc (deep-reverse (car dl)) (deep-reverse (cdr dl))))))
+; (append (list x) l) = (cons x l)
+
+(define (deep-foldr op term nv dl)
+  (cond ((null? dl) nv)
+        ((atom? dl) (term dl))
+        (else (op (deep-foldr op term nv (car dl))
+                  (deep-foldr op term nv (cdr dl))))))
+
+(define (deep-foldr op term nv dl)
+;    (if (atom? dl) (term dl)
+    (foldr op nv (map (lambda (x) (if (atom? x) (term x) (deep-foldr op term nv x))) dl)))
+
+(define (deep-reverse dl) (deep-foldr snoc id '() dl))
 
 (define (flatten dl)
   (cond ((null? dl) '())
         ((atom? dl) (list dl))
         (else (append (flatten (car dl)) (flatten (cdr dl))))))
 
-(define (deep-reverse dl)
-  (cond ((null? dl) '())
-        ((atom? dl) dl)
-        (else (append (deep-reverse (cdr dl)) (list (deep-reverse (car dl)))))))
+(define (flatten dl) (deep-foldr append list '() dl))
 
-; (append (list x) l) = (cons x l)
+(define (count-atoms dl)
+  (cond ((null? dl) 0)
+        ((atom? dl) 1)
+        (else (+ (count-atoms (car dl)) (count-atoms (cdr dl))))))
+
+(define (count-atoms dl) (deep-foldr + (lambda (x) 1) 0 dl))
+
+(define (append . pl) ; pl е списък от списъци
+  (cond ((null? pl) '())
+      ; поне един параметър
+        ((null? (car pl)) (apply append (cdr pl)))  ; (append '() l2 l3 l4 l5 ...) --> не (append (list l2 l3 l4 l5  ...)), а (append l2 l3 ...)
+        (else (cons (caar pl) (apply append (cons (cdar pl) (cdr pl)))))))    ; (append (x . l1) l2 l3 l4 l5 ...) --> (cons x (append l1 l2 l3....))
+          
+(define (evali x) (eval x (interaction-environment)))
+  
