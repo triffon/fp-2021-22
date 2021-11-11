@@ -98,27 +98,8 @@
   (all? (lambda (x) (equal? x (head lst)))
         (tail lst)))
 (define (get-best ml l)
-  ; Бонус за който открие защо не работи (!)
-  ;(define (>-metric m1 m2)
-  ;  (if (> (m1 l) (m2 l)) m1 m2))
-  ;(extremumBy >-metric ml))
-  (define (loop ml res)
-    (cond [(null? ml) res]
-          [(> ((head ml) l) (res l))
-           (loop (tail ml) (head ml))]
-          [else (loop (tail ml) res)]))
-  (loop (tail ml) (head ml)))
+  (define (>-metric m1 m2) (> (m1 l) (m2 l)))
+  (extremumBy >-metric ml))
         
 (define (best-metric? ml ll)
   (all-equal? (map (lambda (l) (get-best ml l)) ll)))
-
-(define (sum l) (apply + l))
-(define (prod l) (apply * l))
-
-; Трябва да връща #f (!)
-; (best-metric? (list car sum)  '((100 -100) (29 1) (42)))
-
-
-
-
-
