@@ -1,6 +1,7 @@
 (require rackunit rackunit/text-ui)
 
-
+(define (reverse-columns m)
+  (map reverse m))
 
 (define reverse-columns-tests
   (test-suite

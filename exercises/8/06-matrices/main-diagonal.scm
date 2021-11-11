@@ -1,6 +1,23 @@
 (require rackunit rackunit/text-ui)
 
+(define (dimensions m)
+  (let ((rows (length m))
+        (columns (length (car m))))
+       (cons rows columns)))
 
+(define (main-diagonal m)
+  (define dim (dimensions m))
+  (define diagonal-size (min (car dim) (cdr dim)))
+
+  (define (iterate index diagonal matrix)
+    (if (= index diagonal-size)
+        diagonal
+        (iterate (+ index 1)
+                 (cons (list-ref (car matrix) index)
+                       diagonal)
+                 (cdr matrix))))
+
+  (reverse (iterate 0 '() m)))
 
 (define main-diagonal-tests
   (test-suite

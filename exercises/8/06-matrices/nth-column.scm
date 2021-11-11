@@ -1,6 +1,7 @@
 (require rackunit rackunit/text-ui)
 
-
+(define (nth-column m n)
+  (map (lambda (row) (list-ref row (- n 1))) m))
 
 (define nth-column-tests
   (test-suite

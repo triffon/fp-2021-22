@@ -1,6 +1,9 @@
 (require rackunit rackunit/text-ui)
 
-
+(define (dimensions m)
+  (let ((rows (length m))
+        (columns (length (car m))))
+       (cons rows columns)))
 
 (define dimensions-tests
   (test-suite
