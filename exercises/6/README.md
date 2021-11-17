@@ -17,6 +17,7 @@
 |  4  | [Списъци][4e]                                   | [решения 04][4s]    |             |
 |  5  | [Fold, Дълбоки Списъци][5e]                     | [решения 05][5s]    |             |
 |  -  | Подготовка за първо контролно                   |                     | [код от часа][exam1prep] |
+|  -  | Първо контролно [тестове][exam1checks]          | [решения exam1][exam1solutions] | |
 
 [1e]: 01-basics/problems.01.rkt
 [1s]: 01-basics/solutions.01.rkt
@@ -34,6 +35,8 @@
 [5s]: 05-fold--deep-lists/solutions
 
 [exam1prep]: exam01/class.exam1-prep.rkt
+[exam1checks]: exam01/check/checks.rkt
+[exam1solutions]: exam01/ex1.21-22.solutions.rkt
 
 [Обяснения към упражненията на 7 група](../7/class)
 [Learn You a Haskell for Great Good!](https://learnyouahaskell.com/chapters)
