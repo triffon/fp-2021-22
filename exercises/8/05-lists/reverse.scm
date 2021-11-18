@@ -1,6 +1,14 @@
 (require rackunit rackunit/text-ui)
 
+(define (reverse l)
+  (define (loop original reversed)
+    (if (null? original)
+        reversed
+        (loop (cdr original)
+              (cons (car original)
+                    reversed))))
 
+  (loop l '()))
 
 (define reverse-tests
   (test-suite

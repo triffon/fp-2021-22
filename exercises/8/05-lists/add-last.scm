@@ -1,5 +1,11 @@
 (require rackunit rackunit/text-ui)
 
+(define (add-last l x)
+  (if (null? l)
+      (list x)
+      (cons (car l)
+            (add-last (cdr l) x))))
+
 (define add-last-tests
   (test-suite
     "Tests for add-last"

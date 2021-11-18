@@ -4,6 +4,15 @@
 (define (1+ x) (+ x 1))
 (define (square x) (* x x))
 
+(define (accumulate l op nv term)
+  (define (loop result l)
+    (if (null? l)
+        result
+        (loop (op result (term (car l)))
+              (cdr l))))
+
+  (loop nv l))
+
 (define accumulate-tests
   (test-suite
     "Tests for accumulate"

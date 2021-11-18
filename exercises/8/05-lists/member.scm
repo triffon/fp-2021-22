@@ -1,6 +1,9 @@
 (require rackunit rackunit/text-ui)
 
-
+(define (member? l x)
+  (cond ((null? l) #f)
+        ((equal? (car l) x) #t)
+        (else (member? (cdr l) x))))
 
 (define member?-tests
   (test-suite

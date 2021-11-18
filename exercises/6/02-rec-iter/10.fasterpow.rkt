@@ -10,6 +10,7 @@
 (run-tests
   (test-suite
     "fasterpow tests"
+    (check = (fasterpow 3 15) 14348907)
     (check = (fasterpow 10 4) 10000)
     (check = (fasterpow 5 3) 125)
     (check = (fasterpow -5 3) -125)

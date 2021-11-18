@@ -45,3 +45,15 @@
   (accumulate + 0 (lambda (x) (if (p x) 1 0)) a b))
   
 
+
+
+(define (repeat2 n f)
+  (accumulate o (lambda (x) x) (lambda (x) f) 1 n))
+
+(define (repeated2 n f x)
+  (accumulate (lambda (a b) (f b)) x (lambda (x) 42) 1 n))
+
+; (o f (o f (o f (o f id))))
+
+; (f (f (f (f x))))
+; (op (F 1) (op (F 2) (op (F 3) (op (F 4) init))))

@@ -1,5 +1,9 @@
 (require rackunit rackunit/text-ui)
 
+(define (partition pred? l)
+  (cons (filter pred? l)
+        (list (filter (lambda (x) (not (pred? x))) l))))
+
 (define partition-tests
   (test-suite
     "Tests for partition"

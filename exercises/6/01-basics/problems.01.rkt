@@ -1,18 +1,13 @@
 #lang racket
 
-; приказки
-; бобо
-
 (define (1+ n) (+ 1 n))
-;square
-; защо има въпросителни накрая? ???
-
-(define (ascii->code char) 'покажи)
-
-; факториел
-; фибоначи
-
-
+(define (ascii->code char)
+  (cond
+    ((= char 'A) 65)
+    ((= char 'D) 68)
+    ((= char 'E) 69)
+    ; и така нататък...
+    (else 'unknown)))
 
 ; задачки (`'тук` трябва да попълните):
 
@@ -25,13 +20,16 @@
 ; 4 | (1 - i)^21                                       | колко е?
 
 (define calc1
-  'тук)
+  (* (+ 10 5.16 19 9.712361) (- 20 (- 16 4))))
 (define calc2
-  'тук)
+  (+ 1/4 2/5 3/8 (* 6 (- 5.1 1.6) (- 9/3 7/4))))
 (define calc3
-  'тук)
+  (+ (expt 3 (quotient 60 7)) (quotient (expt 2 10) 179)))
 (define calc4
-  'тук)
+  (expt (- 1 (sqrt 2)) 21)) ; изчислява се до `1024 - 1024i`
+calc1
+calc2
+calc3
 
 ; зад 2
 (define (odd? n) ; четно

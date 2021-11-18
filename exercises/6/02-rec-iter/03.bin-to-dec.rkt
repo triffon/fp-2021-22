@@ -17,8 +17,8 @@
     (check = (bin-to-dec 0) 0)
     (check = (bin-to-dec 1) 1)
     (check = (bin-to-dec 100) 4)
-    (check = (bin-to-dec 1111) 15))
-    (check = (bin-to-dec 110111) 55))
+    (check = (bin-to-dec 1111) 15)
+    (check = (bin-to-dec 110111) 55)
     (check = (bin-to-dec 111010110111) 3767))
   'verbose)
 
