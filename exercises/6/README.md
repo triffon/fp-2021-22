@@ -19,6 +19,7 @@
 |  -  | Подготовка за първо контролно                              |                     | [код от часа][exam1prep] |
 |  -  | Първо контролно [тестове][exam1checks]                     | [решения exam1][exam1solutions] | |
 |  6  | [Структури от данни - матрици, дървета, асоц. списъци][6e] |                     |             |
+|  7  | [Графи и потоци][7e] |                     |             |
 
 [1e]: 01-basics/problems.01.rkt
 [1s]: 01-basics/solutions.01.rkt
@@ -40,6 +41,7 @@
 [exam1solutions]: exam01/ex1.21-22.solutions.rkt
 
 [6e]: 06-data-structures
+[7e]: 07-graphs--streams
 
 
 [Упражненията на 7 група](../7/class)
