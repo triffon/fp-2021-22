@@ -35,7 +35,7 @@
          #f)))
 
 (define (assoc? l)
-  (and (contains-only-pairs? l) (no-duplicate-keys? l)))
+  (and (list? l) (contains-only-pairs? l) (no-duplicate-keys? l)))
 
 (define (assoc-set l k v)
   (if (null? l) (cons (cons k v) l)
@@ -69,18 +69,31 @@
    (cons 2 (list 3))
    (cons 3 (list 1))))
 
+(define my-dag
+  (list
+   (cons 1 (list 2 3))
+   (cons 2 (list 3 4 5))
+   (cons 4 (list 5))
+   (cons 3 (list 6))
+   (cons 6 (list 5))))
+
 (define (neighbours-list g)
   (forall-values? g (lambda (x) (forall? x (lambda (y) (contains-key? y g)) ))))
+
 
 (define (graph? g)
   (and
    (assoc? g)
    (forall-values? g list?)
-   (no-duplicate-keys? g))
-   (neighbours-list g))
+   (neighbours-list g)))
 
 (define (out-deg g x)
   (length (assoc-get g x)))
+
+(define (out-deg2 g x)
+  (accumulate + 0
+                 (lambda (pair) (if (equal? x (car pair))
+                                    (length (cdr pair)) 0)) g))
 
 (define (member? elem l)
   (if (null? l) #f
@@ -93,3 +106,51 @@
 
 (define (in-deg g x)
   (accumulate + 0 (lambda (pair) (if (member? x (cdr pair)) 1 0)) g))
+
+(define (deg g x)
+  (+ (out-deg g x)
+     (in-deg g x)))
+
+(define (max-deg g)
+ (accumulate max 0 (lambda (y) (deg g (car y))) g))
+
+(define (edge2? g x y)
+  (accumulate
+   (lambda (x y) (or x y))
+   #f
+   (lambda (pair) (and (equal? x (car pair)) (member? y (cdr pair))))
+   g ))
+
+(define (children g x)
+  (assoc-get g x))
+
+(define (edge? g x y)
+  (member? y (children g x)))
+
+(define (id x) x)
+
+(define (shorter l1 l2)
+  (if (< (length l2) (length l1))
+      l2
+      l1))
+
+(define (shortest l)
+  (if (null? l)
+      #f
+      (if (null? (cdr l))
+          (car l)
+          (shorter (car l) (shortest (cdr l))))))
+      
+(define (path g x y)
+  (path-limited g x y (length g)))
+
+(define (path-limited g x y depth-limit)
+  (define (path-to-y z) (path-limited g z y (- depth-limit 1)))
+  (define (remove-falses l) (filter id l))
+  (define (add-x p) (cons x p))
+
+  (if (equal? x y)
+      (list x)
+      (if (= depth-limit 0)
+          #f
+          (shortest (map add-x (remove-falses (map path-to-y (children g x))))))))
