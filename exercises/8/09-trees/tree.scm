@@ -11,6 +11,7 @@
 
   (define the-empty-tree '())
 
+  ; можем да дефинираме тройката и като (list root left right)
   (define (make-tree root left right)
     (cons root
           (cons left right)))
