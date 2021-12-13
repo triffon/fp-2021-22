@@ -75,8 +75,8 @@
 
 (define primes (my-stream-filter prime? nats))
 
+(define (iterate f x)
+  (my-stream-cons x (iterate f (f x))))
 
-(define (iterate f s)
-  (if (my-stream-empty? s)
-     (my-empty-stream)
-     (my-stream-cons (f (my-stream-first s)) (iterate f (iterate f (my-stream-rest s))))))
+(define (iterate2 f x)
+  (my-stream-cons x (my-stream-map f (iterate2 f x))))
