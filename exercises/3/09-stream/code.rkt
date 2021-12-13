@@ -13,10 +13,10 @@
 (define (my-stream-rest s)
   (my-force (cdr s)))
 
-(define my-empty-stream #f)
+(define my-empty-stream 'empty-stream)
 
 (define (my-stream-empty? s)
-  (equal? s #f))
+  (equal? s 'empty-stream))
 
 (define (my-list-to-stream l)
   (if (null? l)
@@ -29,8 +29,54 @@
   (my-stream-cons x (nats-after (+ 1 x))))
 
 (define nats (nats-after 0))
+(define nats1 (nats-after 1))
+(define nats2 (nats-after 2))
 
 (define (my-take-from-stream s n)
   (if (or (= n 0) (my-stream-empty? s))
      '()
      (cons (my-stream-first s) (my-take-from-stream (my-stream-rest s) (- n 1)))))
+
+(define (my-nth-from-stream s n)
+  (if (= n 0)
+     (my-stream-first s)
+     (my-nth-from-stream (my-stream-rest s) (- n 1))))
+
+(define (my-stream-filter p s)
+  (cond
+    ((my-stream-empty? s) my-empty-stream)
+    ((p (my-stream-first s))
+      (my-stream-cons (my-stream-first s) (my-stream-filter p (my-stream-rest s))))
+    (else
+      (my-stream-filter p (my-stream-rest s)))))
+
+(define (my-stream-map f s)
+  (if (my-stream-empty? s)
+      my-empty-stream
+      (my-stream-cons (f (my-stream-first s)) (my-stream-map f (my-stream-rest s)))))
+
+; вариант с безкрайно сито на Ератостен
+(define (is-divider? x n)
+  (= (remainder n x) 0))
+
+(define (filter-not-divided-by div s)
+  (my-stream-filter (lambda (f) (not (is-divider? div f))) s))
+
+(define (primes-iter pp)
+  (my-stream-cons
+   (my-stream-first pp)
+   (primes-iter (filter-not-divided-by (my-stream-first pp) (my-stream-rest pp)))))
+
+(define primes2 (my-stream-cons 1 (primes-iter nats2)))
+
+; вариант с проверка за просто число (лесен)
+(define (prime? n)
+  #t) ; тук имплементираме проверка за просто число
+
+(define primes (my-stream-filter prime? nats))
+
+
+(define (iterate f s)
+  (if (my-stream-empty? s)
+     (my-empty-stream)
+     (my-stream-cons (f (my-stream-first s)) (iterate f (iterate f (my-stream-rest s))))))
