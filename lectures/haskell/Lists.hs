@@ -2,7 +2,7 @@ module Lists where
 
 import Prelude hiding (head, tail, null, length,
                        enumFromTo, enumFromThenTo,
-                       (++), reverse, (!!))
+                       (++), reverse, (!!), elem)
 
 head (h:_) = h
 
@@ -16,6 +16,7 @@ length []    = 0
 length (_:t) = 1 + length t
 -}
 
+length :: [a] -> Int
 length l = case l of []    -> 0
                      (_:t) -> 1 + length t
 
@@ -44,3 +45,18 @@ reverse (h:t) = reverse t ++ [h]
 (h:_) !! 0 = h
 (_:t) !! n = t !! (n-1)
 
+elem :: Eq a => a -> [a] -> Bool
+
+elem _ []    = False
+elem x (h:t) = x == h || elem x t
+
+-- elem x l = not (null l) && (x == head l || elem x (tail l))
+x ∈ l = elem x l
+
+елемент_на x l = elem x l
+
+pythagoreanTriples a b = [ (x, y, z) | x <- [a..b],
+                                       y <- [x+1..b],
+                                       z <- [a..b],
+                                       gcd x y == 1,
+                                       z^2 == x^2 + y^2 ]
