@@ -119,7 +119,6 @@
                                            " = "
                                            (number->string (sq (caddr x)))
                                            "\n"))
-                                       
                    (= (+ (sq (car x))
                          (sq (cadr x)))
                       (sq (caddr x))))

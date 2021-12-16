@@ -19,7 +19,7 @@
 
 (define (find p? l)
   (and (not (null? l))
-       (or (and (p? (car l)) (car l))
+       (or (p? (car l))
            (find p? (cdr l)))))
 
 ; (define (exists? p? l)
