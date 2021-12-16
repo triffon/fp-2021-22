@@ -37,6 +37,8 @@
 
 13.12.2021 :computer: Упражнение 10 - Запознаваме се със синтаксиса на Haskell чрез [няколко уводни задачи](12-haskell-intro/). [Списъци в Haskell](13-haskell-lists-and-lambdas/).
 
+16.12.2021 :computer: Упражнение 11 - Упражняваме Haskell със [задачи върху списъци](13-haskell-lists-and-lambdas/). Запознаваме се и с [потоци](14-haskell-streams/).
+
 ## FAQ
 
 ### За Haskell

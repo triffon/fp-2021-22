@@ -1,3 +1,4 @@
+import Data.List (sortOn, inits, tails)
 import Prelude hiding
  ( signum, sum, elem, map, filter, reverse, last, init, (!!)
  , take, drop, splitAt, chunk, takeWhile, dropWhile, zipWith
@@ -78,6 +79,14 @@ map _ [] = []
 map f (h:t) = f h : map f t
 
 
+subLists l = sortOn length [
+    suffix
+  | prefix <- inits l
+  , suffix <- tails prefix
+  , not . null $ suffix
+  ]
+
+
 filter :: (t -> Bool) -> [t] -> [t]
 filter _ [] = []
 filter p (h:t)
@@ -114,10 +123,12 @@ drop 0 l = l
 drop n [] = []
 drop n (x:xs) = drop (n - 1) xs
 
-splitAt n l = [take n l, drop n l]
+splitAt n l = (take n l, drop n l)
 
 chunk _ [] = []
-chunk n l = take n l : chunk n (drop n l)
+chunk n l = let (left, right) = splitAt n l
+            in left : chunk n right
+-- chunk n l = take n l : chunk n (drop n l)
 
 takeWhile _ [] = []
 takeWhile p (x:xs)
@@ -147,6 +158,13 @@ unzip ((a, b):xs) = let (l1, l2) = unzip xs
 --   where traverse [] l1 l2 = (l1, l2)
 --         traverse ((a, b):xs) l1 l2 = traverse xs (a:l1) (b:l2)
 
+fibs = 0 : 1 : zipWith (+) fibs (drop 1 fibs)
+--   0|1 1 2 3 5 8 ...
+--   +|+ + + + + + +
+-- X 1|1 2 3 5 8 ...
+-- = =|= = = = = =
+-- 0 1|2 3 5 8 13
+
 main :: IO ()
 main = print
   (  signum 42 == 1
@@ -171,11 +189,12 @@ main = print
   && take 3 [1..5] == [1..3]
   && take 30 [1..5] == [1..5]
   && drop 3 [1..10] == [4..10]
-  && splitAt 3 [1..7] == [[1..3], [4..7]]
+  && splitAt 3 [1..7] == ([1..3], [4..7])
   && chunk 3 [1..10] == [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10]]
   && takeWhile even [2, 4, 5, 6] == [2, 4]
   && dropWhile even [2, 4, 5, 6] == [5, 6]
   && sortedInsert 5 [1, 3, 4, 7, 8] == [1, 3, 4, 5, 7, 8]
   && zipWith (+) [1, 2, 3] [4, 5, 6, 7] == [5, 7, 9]
   && sorted [1..10]
+  && take 10 fibs == [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
   )
