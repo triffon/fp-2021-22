@@ -11,6 +11,7 @@ import Prelude hiding (sum, length, maximum, elem, reverse, take, drop, concat, 
 
 <details>
   <summary>Покажи</summary>
+
 ```hs
 (++) :: [a] -> [a] -> [a] -- infixr 5
 map :: (a -> b) -> [a] -> [b]
