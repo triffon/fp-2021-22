@@ -23,13 +23,16 @@
 
 #### Дефиниране
 - константа:
-    
+```
     foo :: Int
     foo = 42
+```
 
 - функция:
+```
     add :: Int -> Int -> Int
     add x y = x + y
+```
 
 #### Условие
 - `if FOO then BAR else BAZ`
