@@ -1,3 +1,16 @@
+### Опции на компилатора
+
+Ще накараме компилатора да бъде по-стриктен и да ни предупреждава за разни неща, които са предпоставка за грешки:
+
+```
+{-# OPTIONS_GHC -fwarn-incomplete-patterns #-}     -- cover all cases!
+{-# OPTIONS_GHC -fwarn-unused-matches #-}          -- use all your pattern matches!
+{-# OPTIONS_GHC -fwarn-missing-signatures #-}      -- write all your toplevel signatures!
+{-# OPTIONS_GHC -fwarn-name-shadowing #-}          -- use different names!
+{-# OPTIONS_GHC -fwarn-incomplete-uni-patterns #-} -- warn about incomplete patterns v2
+{-# OPTIONS_GHC -Werror #-}                        -- turn warnings into errors
+```
+
 ### Основни неща
 
 #### Основни типове
