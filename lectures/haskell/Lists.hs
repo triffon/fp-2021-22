@@ -4,7 +4,8 @@ import Prelude hiding (head, tail, null, length,
                        enumFromTo, enumFromThenTo,
                        (++), reverse, (!!), elem,
                        init, last, take, drop,
-                       map, filter, foldr, foldl)
+                       map, filter, foldr, foldl,
+                       foldr1, foldl1, scanr, scanl)
 
 head :: [a] -> a
 head (h:_) = h
@@ -105,10 +106,19 @@ pythagoreanTriples a b = [ (x, y, z) | z <- [a..b],
 init :: [a] -> [a]
 init [_]   = []
 init (h:t) = h:init t
+-- foldr1 :: (a -> a -> a) -> [a] -> a
+-- init   ::                  [a] -> [a]
+
 
 last :: [a] -> a
+{-
 last [a]   = a
 last (_:t) = last t
+-}
+-- foldr1 :: (a -> a -> a) -> [a] -> a
+-- last ::                    [a] -> a
+last = foldr1 (const id)
+-- last = foldl1 (\r x -> x)
 
 take :: Int -> [a] -> [a]
 take 0 _     = []
@@ -147,7 +157,7 @@ enumF a = a:enumF (a+1)
 -- foldr op nv l
 foldr :: (a -> b -> b) -> b -> [a] -> b
 foldr _  nv []     = nv
-foldr op nv (x:xs) = x `op` (foldr op nv xs)
+foldr op nv (x:xs) = x `op` foldr op nv xs
 
 -- map   :: (a -> b)           -> [a] -> [b]
 -- foldr :: (t -> u -> u) -> u -> [t] -> u
@@ -168,3 +178,29 @@ filter p = foldr (\x -> if p x then (x:) else id) []
 foldl :: (b -> a -> b) -> b -> [a] -> b
 foldl _  nv []     = nv
 foldl op nv (x:xs) = foldl op (nv `op` x) xs
+
+foldr1 :: (a -> a -> a) -> [a] -> a
+foldr1 _  [x]    = x
+foldr1 op (x:xs) = x `op` foldr1 op xs
+
+foldl1 :: (a -> a -> a) -> [a] -> a
+foldl1 op (x:xs) = foldl op x xs
+
+-- foldr :: (a -> b -> b) -> b -> [a] -> b
+scanr    :: (a -> b -> b) -> b -> [a] -> [b]
+-- foldr _  nv []     = nv
+scanr     _ nv []     = [nv]
+-- foldr op nv (x:xs) = x `op` foldr op nv xs
+-- foldr op nv xs = head (scanr op nv xs)
+scanr    op nv (x:xs) = x `op` r:rest
+ where rest@(r:_) = scanr op nv xs
+-- може ли scanr чрез foldr?
+
+-- foldl :: (b -> a -> b) -> b -> [a] -> b
+scanl    :: (b -> a -> b) -> b -> [a] -> [b]
+-- foldl _  nv []     = nv
+scanl    _  nv []     = [nv]
+-- foldl op nv (x:xs) = foldl op (nv `op` x) xs
+-- foldl op nv xs = last (scanl op nv xs)
+scanl    op nv (x:xs) = nv:scanl op (nv `op` x) xs
+-- може ли scanl чрез foldl?
