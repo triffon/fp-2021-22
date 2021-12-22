@@ -22,8 +22,20 @@ length (_:t) = 1 + length t
 -}
 
 length :: [a] -> Int
+{-
 length l = case l of []    -> 0
                      (_:t) -> 1 + length t
+-}
+-- foldr :: (t -> u -> u) -> u -> [t] -> u
+-- t = a
+-- u = Int
+
+-- const :: a -> b -> a
+-- const x _ = x
+-- const x = \_ -> x
+-- \_ -> (1+)
+
+length = foldr (const (1+)) 0
 
 -- 1 + 2:(case x of [] -> 0 ... )
 
@@ -43,12 +55,23 @@ enumFromThenTo a a' b
 
 -- (++) [] l = l
 (++) :: [a] -> [a] -> [a]
-[]    ++ l = l
-(h:t) ++ l = h:t ++ l
+{-
+[]     ++ ys = ys
+(x:xs) ++ ys = x:(xs ++ ys)
+-}
+(++) xs ys = foldr (:) ys xs
 
 reverse :: [a] -> [a]
+
+{-
 reverse []    = []
-reverse (h:t) = reverse t ++ [h]
+reverse (x:xs) = reverse xs ++ [x]
+-}
+-- reverse = foldr (\x -> (++[x])) []
+-- rcons xs x = x : xs
+-- flip f x y = f y x
+-- rcons = flip (:)
+reverse = foldl (flip (:)) []
 
 (!!) :: [a] -> Int -> a
 []    !! _ = error "Невалиден индекс!"
@@ -56,9 +79,16 @@ reverse (h:t) = reverse t ++ [h]
 (_:t) !! n = t !! (n-1)
 
 elem :: Eq a => a -> [a] -> Bool
+-- foldr :: (t -> u -> u) -> u -> [t] -> u
+-- t == a
+-- u == Bool
 
+{-
 elem _ []    = False
-elem x (h:t) = x == h || elem x t
+elem y (x:xs) = y == x || elem y xs
+-}
+
+elem y = foldr (\x -> (||) (y == x)) False
 
 -- elem x l = not (null l) && (x == head l || elem x (tail l))
 x ∈ l = elem x l
@@ -97,14 +127,44 @@ map :: (a -> b) -> [a] -> [b]
 map _ []     = []
 map f (x:xs) = f x : map f xs
 -}
-map f l = [ f x | x <- l ]
+-- map f l = [ f x | x <- l ]
 
 filter :: (a -> Bool) -> [a] -> [a]
 -- filter p l = [ x | x <- l, p x ]
+{-
 filter _ [] = []
 filter p (x:xs)
- | p x       = x:fxs
- | otherwise = fxs
-  where fxs = filter p xs
+ | p x       = x:r
+ | otherwise = r
+  where r = filter p xs
+
+filter p (x:xs) = if p x then x:r else r
+  where r = filter p xs
+-}
 
 enumF a = a:enumF (a+1)
+
+-- foldr op nv l
+foldr :: (a -> b -> b) -> b -> [a] -> b
+foldr _  nv []     = nv
+foldr op nv (x:xs) = x `op` (foldr op nv xs)
+
+-- map   :: (a -> b)           -> [a] -> [b]
+-- foldr :: (t -> u -> u) -> u -> [t] -> u
+-- t = a
+-- u = [b]
+
+-- map f = foldr (\x r -> f x : r) []
+map f = foldr (\x -> (f x:)) []
+
+
+-- filter :: (a -> Bool) ->       [a] -> [a]
+-- foldr :: (t -> u -> u) -> u -> [t] -> u
+-- t = a
+-- u = [a]
+-- filter p = foldr (\x r -> if p x then x:r else r) []
+filter p = foldr (\x -> if p x then (x:) else id) []
+
+foldl :: (b -> a -> b) -> b -> [a] -> b
+foldl _  nv []     = nv
+foldl op nv (x:xs) = foldl op (nv `op` x) xs
