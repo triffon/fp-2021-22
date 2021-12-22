@@ -5,7 +5,9 @@ import Prelude hiding (head, tail, null, length,
                        (++), reverse, (!!), elem,
                        init, last, take, drop,
                        map, filter, foldr, foldl,
-                       foldr1, foldl1, scanr, scanl)
+                       foldr1, foldl1, scanr, scanl,
+                       zip, unzip, zipWith,
+                       takeWhile, dropWhile, any, all)
 
 head :: [a] -> a
 head (h:_) = h
@@ -75,9 +77,13 @@ reverse (x:xs) = reverse xs ++ [x]
 reverse = foldl (flip (:)) []
 
 (!!) :: [a] -> Int -> a
+{-
 []    !! _ = error "Невалиден индекс!"
 (h:_) !! 0 = h
 (_:t) !! n = t !! (n-1)
+-}
+
+l !! i = head [ x | (x,j) <- zip l [0..length l - 1], i == j]
 
 elem :: Eq a => a -> [a] -> Bool
 -- foldr :: (t -> u -> u) -> u -> [t] -> u
@@ -89,7 +95,9 @@ elem _ []    = False
 elem y (x:xs) = y == x || elem y xs
 -}
 
-elem y = foldr (\x -> (||) (y == x)) False
+-- elem y = foldr (\x -> (||) (y == x)) False
+-- elem y l = or (map (==y) l)
+elem y = any (==y)
 
 -- elem x l = not (null l) && (x == head l || elem x (tail l))
 x ∈ l = elem x l
@@ -204,3 +212,46 @@ scanl    _  nv []     = [nv]
 -- foldl op nv xs = last (scanl op nv xs)
 scanl    op nv (x:xs) = nv:scanl op (nv `op` x) xs
 -- може ли scanl чрез foldl?
+
+zip :: [a] -> [b] -> [(a,b)]
+{-
+zip (x:xs) (y:ys) = (x,y):zip xs ys
+zip _      _      = []
+-}
+zip = zipWith (,)
+
+unzip :: [(a,b)] -> ([a],[b])
+{-
+unzip []         = ([], [])
+unzip ((x,y):rest) = (x:xs, y:ys)
+  where (xs, ys) = unzip rest
+-}
+unzip = foldr (\(x,y) (xs,ys) -> (x:xs, y:ys)) ([], [])
+
+zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+--zipWith f xs ys = [ f x y | (x,y) <- zip xs ys ]
+zipWith f (x:xs) (y:ys) = f x y:zipWith f xs ys
+zipWith _ _      _      = []
+
+takeWhile :: (a -> Bool) -> [a] -> [a]
+--    filter p = foldr (\x r -> if p x then x:r else r) []
+-- takeWhile p = foldr (\x r -> if p x then x:r else []) []
+-- filter p = foldr (\x -> if p x then (x:) else id) []
+takeWhile p = foldr (\x -> if p x then (x:) else const []) []
+
+dropWhile :: (a -> Bool) -> [a] -> [a]
+-- dropWhile p = foldr (\x r -> if p x then r else x:r) []
+dropWhile _ []     = []
+dropWhile p l@(x:xs) = if p x then dropWhile p xs else l
+-- може ли dropWhile с foldr?
+-- упътване: foldr, който връща наредена двойка от изтрития и оригиналния списък
+
+any :: (a -> Bool) -> [a] -> Bool
+-- any p = foldr (\x -> (p x ||)) False
+any p l = or (map p l)
+
+all :: (a -> Bool) -> [a] -> Bool
+all p l = and (map p l)
+
+sorted :: Ord a => [a] -> Bool
+sorted l = all (\(x,y) -> x <= y) (zip l (tail l))
