@@ -4,7 +4,10 @@ import Prelude hiding (head, tail, null, length,
                        enumFromTo, enumFromThenTo,
                        (++), reverse, (!!), elem,
                        init, last, take, drop,
-                       map, filter, foldr, foldl)
+                       map, filter, foldr, foldl,
+                       foldr1, foldl1, scanr, scanl,
+                       zip, unzip, zipWith,
+                       takeWhile, dropWhile, any, all)
 
 head :: [a] -> a
 head (h:_) = h
@@ -22,8 +25,20 @@ length (_:t) = 1 + length t
 -}
 
 length :: [a] -> Int
+{-
 length l = case l of []    -> 0
                      (_:t) -> 1 + length t
+-}
+-- foldr :: (t -> u -> u) -> u -> [t] -> u
+-- t = a
+-- u = Int
+
+-- const :: a -> b -> a
+-- const x _ = x
+-- const x = \_ -> x
+-- \_ -> (1+)
+
+length = foldr (const (1+)) 0
 
 -- 1 + 2:(case x of [] -> 0 ... )
 
@@ -43,22 +58,46 @@ enumFromThenTo a a' b
 
 -- (++) [] l = l
 (++) :: [a] -> [a] -> [a]
-[]    ++ l = l
-(h:t) ++ l = h:t ++ l
+{-
+[]     ++ ys = ys
+(x:xs) ++ ys = x:(xs ++ ys)
+-}
+(++) xs ys = foldr (:) ys xs
 
 reverse :: [a] -> [a]
+
+{-
 reverse []    = []
-reverse (h:t) = reverse t ++ [h]
+reverse (x:xs) = reverse xs ++ [x]
+-}
+-- reverse = foldr (\x -> (++[x])) []
+-- rcons xs x = x : xs
+-- flip f x y = f y x
+-- rcons = flip (:)
+reverse = foldl (flip (:)) []
 
 (!!) :: [a] -> Int -> a
+{-
 []    !! _ = error "Невалиден индекс!"
 (h:_) !! 0 = h
 (_:t) !! n = t !! (n-1)
+-}
+
+l !! i = head [ x | (x,j) <- zip l [0..length l - 1], i == j]
 
 elem :: Eq a => a -> [a] -> Bool
+-- foldr :: (t -> u -> u) -> u -> [t] -> u
+-- t == a
+-- u == Bool
 
+{-
 elem _ []    = False
-elem x (h:t) = x == h || elem x t
+elem y (x:xs) = y == x || elem y xs
+-}
+
+-- elem y = foldr (\x -> (||) (y == x)) False
+-- elem y l = or (map (==y) l)
+elem y = any (==y)
 
 -- elem x l = not (null l) && (x == head l || elem x (tail l))
 x ∈ l = elem x l
@@ -75,10 +114,19 @@ pythagoreanTriples a b = [ (x, y, z) | z <- [a..b],
 init :: [a] -> [a]
 init [_]   = []
 init (h:t) = h:init t
+-- foldr1 :: (a -> a -> a) -> [a] -> a
+-- init   ::                  [a] -> [a]
+
 
 last :: [a] -> a
+{-
 last [a]   = a
 last (_:t) = last t
+-}
+-- foldr1 :: (a -> a -> a) -> [a] -> a
+-- last ::                    [a] -> a
+last = foldr1 (const id)
+-- last = foldl1 (\r x -> x)
 
 take :: Int -> [a] -> [a]
 take 0 _     = []
@@ -97,14 +145,113 @@ map :: (a -> b) -> [a] -> [b]
 map _ []     = []
 map f (x:xs) = f x : map f xs
 -}
-map f l = [ f x | x <- l ]
+-- map f l = [ f x | x <- l ]
 
 filter :: (a -> Bool) -> [a] -> [a]
 -- filter p l = [ x | x <- l, p x ]
+{-
 filter _ [] = []
 filter p (x:xs)
- | p x       = x:fxs
- | otherwise = fxs
-  where fxs = filter p xs
+ | p x       = x:r
+ | otherwise = r
+  where r = filter p xs
+
+filter p (x:xs) = if p x then x:r else r
+  where r = filter p xs
+-}
 
 enumF a = a:enumF (a+1)
+
+-- foldr op nv l
+foldr :: (a -> b -> b) -> b -> [a] -> b
+foldr _  nv []     = nv
+foldr op nv (x:xs) = x `op` foldr op nv xs
+
+-- map   :: (a -> b)           -> [a] -> [b]
+-- foldr :: (t -> u -> u) -> u -> [t] -> u
+-- t = a
+-- u = [b]
+
+-- map f = foldr (\x r -> f x : r) []
+map f = foldr (\x -> (f x:)) []
+
+
+-- filter :: (a -> Bool) ->       [a] -> [a]
+-- foldr :: (t -> u -> u) -> u -> [t] -> u
+-- t = a
+-- u = [a]
+-- filter p = foldr (\x r -> if p x then x:r else r) []
+filter p = foldr (\x -> if p x then (x:) else id) []
+
+foldl :: (b -> a -> b) -> b -> [a] -> b
+foldl _  nv []     = nv
+foldl op nv (x:xs) = foldl op (nv `op` x) xs
+
+foldr1 :: (a -> a -> a) -> [a] -> a
+foldr1 _  [x]    = x
+foldr1 op (x:xs) = x `op` foldr1 op xs
+
+foldl1 :: (a -> a -> a) -> [a] -> a
+foldl1 op (x:xs) = foldl op x xs
+
+-- foldr :: (a -> b -> b) -> b -> [a] -> b
+scanr    :: (a -> b -> b) -> b -> [a] -> [b]
+-- foldr _  nv []     = nv
+scanr     _ nv []     = [nv]
+-- foldr op nv (x:xs) = x `op` foldr op nv xs
+-- foldr op nv xs = head (scanr op nv xs)
+scanr    op nv (x:xs) = x `op` r:rest
+ where rest@(r:_) = scanr op nv xs
+-- може ли scanr чрез foldr?
+
+-- foldl :: (b -> a -> b) -> b -> [a] -> b
+scanl    :: (b -> a -> b) -> b -> [a] -> [b]
+-- foldl _  nv []     = nv
+scanl    _  nv []     = [nv]
+-- foldl op nv (x:xs) = foldl op (nv `op` x) xs
+-- foldl op nv xs = last (scanl op nv xs)
+scanl    op nv (x:xs) = nv:scanl op (nv `op` x) xs
+-- може ли scanl чрез foldl?
+
+zip :: [a] -> [b] -> [(a,b)]
+{-
+zip (x:xs) (y:ys) = (x,y):zip xs ys
+zip _      _      = []
+-}
+zip = zipWith (,)
+
+unzip :: [(a,b)] -> ([a],[b])
+{-
+unzip []         = ([], [])
+unzip ((x,y):rest) = (x:xs, y:ys)
+  where (xs, ys) = unzip rest
+-}
+unzip = foldr (\(x,y) (xs,ys) -> (x:xs, y:ys)) ([], [])
+
+zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
+--zipWith f xs ys = [ f x y | (x,y) <- zip xs ys ]
+zipWith f (x:xs) (y:ys) = f x y:zipWith f xs ys
+zipWith _ _      _      = []
+
+takeWhile :: (a -> Bool) -> [a] -> [a]
+--    filter p = foldr (\x r -> if p x then x:r else r) []
+-- takeWhile p = foldr (\x r -> if p x then x:r else []) []
+-- filter p = foldr (\x -> if p x then (x:) else id) []
+takeWhile p = foldr (\x -> if p x then (x:) else const []) []
+
+dropWhile :: (a -> Bool) -> [a] -> [a]
+-- dropWhile p = foldr (\x r -> if p x then r else x:r) []
+dropWhile _ []     = []
+dropWhile p l@(x:xs) = if p x then dropWhile p xs else l
+-- може ли dropWhile с foldr?
+-- упътване: foldr, който връща наредена двойка от изтрития и оригиналния списък
+
+any :: (a -> Bool) -> [a] -> Bool
+-- any p = foldr (\x -> (p x ||)) False
+any p l = or (map p l)
+
+all :: (a -> Bool) -> [a] -> Bool
+all p l = and (map p l)
+
+sorted :: Ord a => [a] -> Bool
+sorted l = all (\(x,y) -> x <= y) (zip l (tail l))
