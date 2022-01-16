@@ -141,7 +141,7 @@ class Show a where
 instance Show RPS where
     show Rock = "🪨"
     show Paper = "🧻"
-    show Scissors = "✂️a"
+    show Scissors = "✂️"
 ```
 
 Можем да дефинираме инстанции, които зависят от други инстанции:
