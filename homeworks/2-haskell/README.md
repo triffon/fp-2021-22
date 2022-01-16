@@ -1,6 +1,7 @@
 # Второ домашно по ФП
 
 > В решението е позволено да се ползва само модулът `Prelude`. Всякакви други модули са забранени.
+#### [Сваляне на файловете в тази директория](https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Ftriffon%2Ffp-2021-22%2Ftree%2Fmaster%2Fhomeworks%2F2-haskell)
 
 ## Типове
 
