@@ -74,15 +74,15 @@ maxMutations :: CodingTable -> GeneticCode -> Int
 ## Предаване
 В мудъл качвате един файл - `GroupX_fnY.hs`, като го преименувате с X = вашата група и Y = вашия факултетен номер.
 
-Преименуването ще попречи на пускането на примерите чрез `Example.hs` затова преименувайте само накрая преди предаване.
+Преименуването ще попречи на пускането на примерите чрез `Examples.hs` затова преименувайте само накрая преди предаване.
 
 ## Примери
-Виж [Example.hs].
+Виж [Examples.hs].
 
 > Забележка: Примерите не тестват всичко, домашното ви ще бъде пробвано срещу повече случаи.
 
 ### Пускане на примерите
-Препоръчително е свалите файловете в тази директория, да си пишете кода в [GroupX_fnY.hs], и да го тествате чрез [Example.hs]:
+Препоръчително е свалите файловете в тази директория, да си пишете кода в [GroupX_fnY.hs], и да го тествате чрез [Examples.hs]:
 ```sh
 $ runhaskell Examples.hs
 testing hasSameProteins
@@ -102,5 +102,5 @@ testing maxMutations
 ```
 Стартирането на `Examples.hs` може да стане чрез `runghc Examples.hs`, или `runhaskell Examples.hs`, или в `ghci Examples.hs` да се стартира `main`.
 
-[Example.hs]: ./Examples.hs
+[Examples.hs]: ./Examples.hs
 [GroupX_fnY.hs]: ./GroupX_fnY.hs
