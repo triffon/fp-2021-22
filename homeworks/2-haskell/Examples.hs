@@ -41,7 +41,7 @@ shortCode = GeneticCode [C,C,T,G,G,C,A,G,A,G,T,A,C,A,C,T,T,C,T,A,A,G,T,G,A,C,C,T
 shortCodeDup = GeneticCode [G,A,C,C,T,A,C,A,T,T,T,G,T,A,G,G,A,C,C,T,A,C,A,T,T,T,G,T,A,G,G,A,C,C,T,A,C,A,T,T,T,G,T,A,G,G,A,C,C,T,A,C,A,T,T,T,G]
 
 check :: (Eq a, Show a) => a -> a -> String -> IO ()
-check x y descr = do
+check x y descr =
     if x == y
     then putStrLn $ "🗸 pass: " ++ descr
     else do
