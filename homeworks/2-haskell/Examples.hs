@@ -1,7 +1,6 @@
 module Examples where
 
 import GroupX_fnY
-import qualified Data.Char
 
 -- Стоп-кодоните са закоментирани
 -- https://en.wikipedia.org/wiki/Codon_tables#Standard_DNA_codon_table
