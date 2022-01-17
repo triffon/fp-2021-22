@@ -43,9 +43,9 @@ shortCodeDup = GeneticCode [G,A,C,C,T,A,C,A,T,T,T,G,T,A,G,G,A,C,C,T,A,C,A,T,T,T,
 check :: (Eq a, Show a) => a -> a -> String -> IO ()
 check x y descr =
     if x == y
-    then putStrLn $ "🗸 pass: " ++ descr
+    then putStrLn $ "+ pass: " ++ descr
     else do
-        putStrLn $ "✗ fail: " ++ descr
+        putStrLn $ "- fail: " ++ descr
         putStrLn $ "    expected " ++ show x ++ ", actual " ++ show y
 
 testHasSameProteins :: IO ()
