@@ -166,3 +166,51 @@ foldr op nv (x:xs) = x `op` foldr op nv xs
 foldrBinTree :: (a -> b -> b) -> b -> BinTree a -> b
 foldrBinTree _  nv Empty        = nv
 foldrBinTree op nv (Node x l r) = foldrBinTree op (x `op` foldrBinTree op nv r) l
+
+data Tree a = Tree { rootTree :: a, subtrees :: TreeList a }
+                        deriving (Eq, Ord, Show, Read)
+
+data TreeList a = None | SubTree { firstTree :: Tree a,
+                                   restTrees :: TreeList a }
+                        deriving (Eq, Ord, Show, Read)
+
+leafTree x = Tree x None
+
+tree = Tree 1 $ SubTree (leafTree 2)
+              $ SubTree (Tree 3 $ SubTree (leafTree 4) $ None)
+              $ SubTree (leafTree 5) $ None
+
+level :: Integer -> Tree a -> [a]
+level 0 (Tree x _ ) = [x]
+level n (Tree _ ts) = levelTrees (n-1) ts
+
+levelTrees :: Integer -> TreeList a -> [a]
+levelTrees _ None           = []
+levelTrees n (SubTree t ts) = level n t ++ levelTrees n ts
+
+data SExpr = SBool Bool | SChar Char | SInt Int |
+             SDouble Double | SList { list :: [SExpr] }
+             deriving (Eq, Ord, Show, Read)
+
+sexpr = SList [SInt 2, SChar 'a',
+                       SList [SBool True, SDouble 1.2, SList []]]
+
+countAtoms :: SExpr -> Integer
+{-
+countAtoms (SList []) = 0
+countAtoms (SList (se:ses)) = countAtoms se + countAtoms (SList ses)
+countAtoms _ = 1
+-}
+
+countAtoms (SList ses) = sum $ map countAtoms ses
+countAtoms _           = 1
+
+flatten :: SExpr -> SExpr
+{-
+flatten (SList [])       = SList []
+flatten (SList (se:ses)) = SList (list (flatten se) ++ list (flatten (SList ses)))
+flatten se               = SList [se]
+-}
+
+flatten (SList ses) = SList $ concatMap (list . flatten) ses
+flatten se          = SList [se]
