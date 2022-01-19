@@ -2,14 +2,14 @@
 
 Водени от Деян Горанов.
 
-Всеки петък от 8:00 до 10:00, онлайн в Meet.
+Всеки петък от 15:00 до 17:00, онлайн в Meet.
 
 [Racket cheat sheet](https://docs.racket-lang.org/racket-cheat/index.html)
 
 [Hoogle - търсачка за библиотеките на Haskell](https://hoogle.haskell.org/)
 
 [Learn You a Haskell for Great Good!](http://learnyouahaskell.com/chapters)
-(нещо не е достъпно, [mirror в GitHub](https://github.com/pvorb/learn-you-a-haskell/tree/master/en))
+(ако не е достъпно виж [mirror в GitHub](https://github.com/pvorb/learn-you-a-haskell/tree/master/en))
 
 ## Scheme
 
@@ -73,8 +73,6 @@
 
 [11e]: ./11-lists
 [11c]: ./11-lists/class.11.hs
-
-[12e]: ./12-prelude
 
 [ex2prepscm]: ./exam02/ex2-prep.rkt
 [ex2prephs]: ./exam02/ex2-prep.hs
