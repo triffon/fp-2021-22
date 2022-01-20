@@ -88,4 +88,24 @@ mostExpensive purchases = [(
           where stores = nub $ map store purchases
                 totalPriceFor cat st = getTotalPrice (\Purchase{category = c, store = s} -> c == cat && s == st)
 
-main = print $ store purchase
+extremum :: [[Int]] -> Int
+extremum ll = case foldl1 intersect $ map (\l -> [minimum l, maximum l]) ll of
+    [] -> 0
+    (x:_) -> x
+
+-- Да се напише функция sumLast, която приема две положителни естествени числа
+-- k и n и генерира безкрайния поток, в който първото число е k,
+-- а всяко следващо число е равно на сумата от предходните n числа в потока.
+--
+-- Пример: sumLast 3 5 → [3, 3, 6, 12, 24, 48, 93, 183, … ]
+
+sumLast :: Int -> Int -> [Int]
+sumLast k n = k : generate [k]
+  where lastN :: Int -> [t] -> [t]
+        lastN n l
+          | length l < n = l
+          | otherwise = tail l
+        generate memory = nextElem : generate (lastN n memory ++ [nextElem])
+          where nextElem = sum memory
+
+main = print $ take 8 $ sumLast 3 5
