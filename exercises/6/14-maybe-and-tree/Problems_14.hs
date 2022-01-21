@@ -11,7 +11,7 @@ import Prelude hiding (Maybe(..), maybe, lookup, find)
 -- типов псевдоним (type synonym), type alias.
 type Student'' = (String, String, Int)
               -- (име, специалност, фн)
-  deriving Show
+  --deriving Show
 
 -- За да достъпим информацията за студент
 -- се налага да направим функции, които изглеждат така:
@@ -236,18 +236,6 @@ listToMaybe = undefined
 sumMaybe :: Num a => Maybe a -> a
 sumMaybe = undefined
 
--- EXERCISE: Folding a Maybe
---
--- EXAMPLES:
--- foldMaybe (Just [1,2,3]) == [1,2,3]
--- foldMaybe (Nothing :: Maybe [Int]) == []
-foldMaybe :: Monoid a => Maybe a -> a
-foldMaybe = undefined
-
--- EXERCISE: Analogue of foldMap for lists
-foldMapMaybe :: Monoid b => (a -> b) -> Maybe a -> b
-foldMapMaybe = undefined
-
 -- EXERCISE: Get all the Justs from a list
 --
 -- EXAMPLES:
@@ -372,7 +360,7 @@ data BotTop a = Bot | Val a | Top
 -- Автоматично генерираната инстанция на Ord прави точно това
 -- защото сме подредили конструкторите на BotTop така,
 -- първо Bot, след това Val и накрая Top.
-instance Ord a => Ord BotTop where
+instance Ord a => Ord (BotTop a) where
   compare :: BotTop a -> BotTop a -> Ordering
   compare Bot     Bot     = EQ
   compare Bot     _       = LT
