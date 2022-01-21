@@ -34,6 +34,7 @@
 | 11  | [Още списъци][11e]                                         |                     | [код от часа 11][11c]    |
 | 12  | Подготовка за второ контролно                              | [код на Scheme][ex2prepscm] | [код на Haskell][ex2prephs] |
 | 13  | [Алгебрични типове данни][13e]                             |                     |                          |
+| 14  | [Maybe и Tree][14e]                                        |                     |                          |
 
 
 [1e]: 01-basics/problems.01.rkt
@@ -78,6 +79,8 @@
 [ex2prephs]: ./exam02/ex2-prep.hs
 
 [13e]: ./13-adts-and-type-classes/Class_13.hs
+
+[14e]: ./14-maybe-and-tree/Class_14.hs
 
 
 [Упражненията на 7 група](../7/class)
